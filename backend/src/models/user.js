@@ -23,9 +23,8 @@ const userSchema = new mongoose.Schema({
     },
     gender: {
         type: String,
-        required
+        required: true,
     },
 });
 
-const userModel = mongoose.model('User', userSchema);
-module.exports = userModel;
+module.exports = mongoose.model('User', userSchema);; 
