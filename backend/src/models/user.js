@@ -6,8 +6,7 @@ const userSchema = new mongoose.Schema({
         required: [true, 'First name is required']
     },
     lastName: {
-        type: String,
-        required: [true, 'Last name is required']
+        type: String
     },
     emailId: {
         type: String,
@@ -18,12 +17,10 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Password is required']
     },
     age: {
-        type: Number,
-        required: [true, 'Age is required']
+        type: Number
     },
     gender: {
-        type: String,
-        required: true,
+        type: String
     },
 });
 
