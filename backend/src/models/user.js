@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const validator = require('validator');
 const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
@@ -15,11 +15,21 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Email is required'],
         unique: [true, 'Email already exists'],
         lowercase: true,
-        trim: true
+        trim: true,
+        validate(value) {
+            if (!validator.isEmail(value)) {
+                throw new Error('Email is invalid :' + value);
+            }
+        },
     },
     password: {
         type: String,
-        required: [true, 'Password is required']
+        required: [true, 'Password is required'],
+        validate(value) {
+            if (!value.isStrongPassword(value)) {
+                throw new Error('Password is weak!' + value);
+            }
+        }
     },
     age: {
         type: Number,
@@ -28,12 +38,19 @@ const userSchema = new mongoose.Schema({
     gender: {
         type: String,
         validate(value) {
-            if(["male","female","others"].includes(value)) {
+            if (["male", "female", "others"].includes(value)) {
                 throw new Error("Gender data is not valid!");
-    }}},
+            }
+        }
+    },
     photoUrl: {
         type: String,
-        default: 'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png'
+        default: 'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png',
+        validate(value) {
+            if (!validator.isURL(value)) {
+                throw new Error('URL is invalid' + value);
+            }
+        }
     },
     about: {
         type: String,
@@ -42,6 +59,6 @@ const userSchema = new mongoose.Schema({
     skills: {
         type: [String]
     },
-},{timestamps: true});
+}, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);; 
