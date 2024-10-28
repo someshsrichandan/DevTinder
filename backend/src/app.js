@@ -48,6 +48,22 @@ app.patch("/user/:userId",async (req,res)=>{
     res.status(400).send("UPDATE FAILED :"+ error.message);
   }
 })
+app.post('/login',async (req, res) => {
+  try {
+    const {emailId, password} = req.body;
+    const user =  await User.findOne({emailId: emailId});
+    if(!user){
+      throw new Error("User not found");
+    }
+    const isPasswordVaild = await bcrypt.compare(password,user.password);
+    if(isPasswordVaild){
+      res.send("Login successful");
+    } 
+  } catch (error) {
+    console.log(error);
+    
+  }
+});
 
 connectDB().then(()=>{
   console.log('Database connected');
