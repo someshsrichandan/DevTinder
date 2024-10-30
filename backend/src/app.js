@@ -53,12 +53,14 @@ app.post('/login',async (req, res) => {
     const {emailId, password} = req.body;
     const user =  await User.findOne({emailId: emailId});
     if(!user){
-      throw new Error("User not found");
+      throw new Error("Invalid caredinals");
     }
     const isPasswordVaild = await bcrypt.compare(password,user.password);
     if(isPasswordVaild){
       res.send("Login successful");
-    } 
+    }else{
+      throw new Error("Invalid caredinals");
+    }
   } catch (error) {
     console.log(error);
     
