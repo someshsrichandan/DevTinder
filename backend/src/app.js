@@ -4,8 +4,12 @@ const User = require('./models/user');
 const app = express();
 const bcrypt = require('bcrypt');
 const {validateSignUpData} = require('./utils/validation');
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
+
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.post('/signup',async (req, res) => {
   
@@ -57,6 +61,8 @@ app.post('/login',async (req, res) => {
     }
     const isPasswordVaild = await bcrypt.compare(password,user.password);
     if(isPasswordVaild){
+      //create a jwt token
+        
       res.send("Login successful");
     }else{
       throw new Error("Invalid caredinals");
