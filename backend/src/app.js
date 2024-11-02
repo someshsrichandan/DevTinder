@@ -59,14 +59,24 @@ app.post('/login',async (req, res) => {
     if(!user){
       throw new Error("Invalid caredinals");
     }
-    const isPasswordVaild = await bcrypt.compare(password,user.password);
+    const isPasswordVaild = user.validatePassword(password);
     if(isPasswordVaild){
+      const token = await user.getJWT();
+      res.cookie("token", token, {expires: new Date.mow()+8*3600000});
       //create a jwt token
         
       res.send("Login successful");
     }else{
       throw new Error("Invalid caredinals");
     }
+  } catch (error) {
+    console.log(error);
+    
+  }
+});
+app.get('/profile', async (req, res) => {
+  try {
+    
   } catch (error) {
     console.log(error);
     
