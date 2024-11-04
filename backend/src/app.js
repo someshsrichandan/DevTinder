@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const {validateSignUpData} = require('./utils/validation');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+const { userAuth } = require('./middlewares/auth');
 
 
 app.use(express.json());
@@ -74,8 +75,10 @@ app.post('/login',async (req, res) => {
     
   }
 });
-app.get('/profile', async (req, res) => {
+app.get('/profile',userAuth, async (req, res) => {
   try {
+      const user = req.user;
+      res.send(user);
     
   } catch (error) {
     console.log(error);
