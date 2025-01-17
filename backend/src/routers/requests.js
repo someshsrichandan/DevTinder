@@ -71,7 +71,8 @@ requestRouter.post('/request/review/:status/:toUserId',userAuth, async (req, res
         return res.status(400).send("Request not found");
     }
     connectionRequest.status = status;
-    await connectionRequest.save();
+    const data = await connectionRequest.save();
+    res.json({message: "Connection Request" + status, data});
 
    } catch (error) {
     console.log(error);
