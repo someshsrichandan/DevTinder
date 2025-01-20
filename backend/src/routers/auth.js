@@ -34,7 +34,7 @@ authRouter.post('/login',async (req, res) => {
       const {emailId, password} = req.body;
       const user =  await User.findOne({emailId: emailId});
       if(!user){
-        throw new Error("Invalid caredinals");
+        res.json({message:"User not found"});
       }
       const isPasswordVaild = user.validatePassword(password);
       if(isPasswordVaild){
