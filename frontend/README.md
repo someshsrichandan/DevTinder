@@ -1,3 +1,4 @@
 #Dev Tinder
--create vite application
--delete unwanted files
+- create a vite + react application
+- delete unwanted files
+- Tailwind Added
