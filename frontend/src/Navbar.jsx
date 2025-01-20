@@ -1,10 +1,11 @@
-
+import Logo from './assets/logo.png'
 
 const Navbar = () => {
   return (
     <div className="navbar bg-base-300">
-    <div className="flex-1">
-      <a className="btn btn-ghost text-xl">DevTinder</a>
+    <div className="flex-1 mx-5">
+        
+      <a className="btn btn-ghost text-xl"><img src={Logo} alt="logo" className= " w-10 h-10" />DevTinder</a>
     </div>
     <div className="flex-none gap-2">
       {/* <div className="form-control">
