@@ -8,3 +8,6 @@
 - installed react router dom
 - creating BrowserRouter > Routs > Rout=/Body > children router
 - create an outlate for body
+- install cors => add into middleware => add orgin , crediantial true
+
+- install axios to the frontend add withcareditanl true
