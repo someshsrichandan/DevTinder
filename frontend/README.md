@@ -11,3 +11,4 @@
 - install cors => add into middleware => add orgin , crediantial true
 
 - install axios to the frontend add withcareditanl true
+- install react-redux @reduxjs/toolkit => configureStore => provider => createSlice => add reduced to user store
