@@ -16,6 +16,7 @@ const handleLogin = async() => {
       emailId: email,
       password: password
     },{withCredentials: true});
+    console.log(res.data);
     dispatch(addUser(res.data));
    } catch (error) {
     console.log(error);

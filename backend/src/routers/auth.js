@@ -44,7 +44,7 @@ authRouter.post('/login',async (req, res) => {
         });
         //create a jwt token
           
-        res.send("Login successful");
+        res.send(user);
       }else{
         throw new Error("Invalid caredinals");
       }
