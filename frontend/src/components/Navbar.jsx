@@ -1,10 +1,9 @@
 
-import Logo from './assets/logo.png'
+import Logo from '../assets/logo.png'
 import { useSelector } from 'react-redux'
 
 const Navbar = () => {
   const user = useSelector((store)=>store.user);
-  console.log(user)
   return (
     <div className="navbar bg-base-300">
     <div className="flex-1 mx-5">

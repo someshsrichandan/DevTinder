@@ -1,5 +1,5 @@
 
-import Logo from './assets/logo.png'
+import Logo from '../assets/logo.png'
 const Footer = () => {
   return (
     <footer className="footer bg-base-300 text-neutral-content items-center p-4 fixed bottom-0">
