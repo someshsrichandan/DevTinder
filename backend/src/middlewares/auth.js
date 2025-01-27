@@ -15,7 +15,7 @@ const userAuth = async (req, res, next) => {
        
 
     } catch (error) {
-        res.status(401).send({ error: "Please authenticate" });
+        res.status(401).send("Unauthorized");
     }
 }
 module.exports = {
