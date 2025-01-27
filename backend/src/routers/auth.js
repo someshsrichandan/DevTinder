@@ -34,9 +34,9 @@ authRouter.post('/login',async (req, res) => {
       const {emailId, password} = req.body;
       const user =  await User.findOne({emailId: emailId});
       if(!user){
-        res.json({message:"User not found"});
+       return res.status(401).send("Invalid credentials");
       }
-      const isPasswordVaild = user.validatePassword(password);
+      const isPasswordVaild = await user.validatePassword(password);
       if(isPasswordVaild){
         const token = await user.getJWT();
         res.cookie("token", token, {
@@ -46,7 +46,7 @@ authRouter.post('/login',async (req, res) => {
           
         res.send(user);
       }else{
-        throw new Error("Invalid caredinals");
+        return res.status(401).send("Invalid credentials");
       }
     } catch (error) {
       console.log(error);

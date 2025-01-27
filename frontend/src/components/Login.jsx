@@ -9,6 +9,7 @@ const Login = () => {
 
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
+const [error, setError] = useState('');
 const dispatch = useDispatch();
 const navigate  = useNavigate();
 
@@ -22,6 +23,7 @@ const handleLogin = async() => {
     dispatch(addUser(res.data));
     return navigate('/');
    } catch (error) {
+    setError(error.response?.data || "Invalid Credentials");
     console.log(error);
    }
   
@@ -46,6 +48,7 @@ const handleLogin = async() => {
               <input type="password" placeholder="Enter Your Password" value={password} onChange={(e)=>{setPassword(e.target.value)}} className="w-full max-w-xs input input-bordered" />
             </label>
           </div>
+          <p className="text-red-600">{error}</p>
           <div className="flex justify-center mt-2 card-actions">
             <button className="btn btn-primary" onClick={handleLogin}>Login</button>
           </div>
