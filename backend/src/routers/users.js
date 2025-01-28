@@ -3,6 +3,7 @@ const userRouter = express.Router();
 const { userAuth } = require("../middlewares/auth.js");
 const ConnectionRequestModel = require('../models/connectionRequest');
 const User = require('../models/user.js');
+const { set } = require('mongoose');
 
 const USER_SAFE_DATA = "firstName lastName age gender photoUrl skills";
 
@@ -63,7 +64,6 @@ try {
 userRouter.get('/feed',userAuth, async (req, res) => {
     try {
         const loggedInUser = req.user;
-
         const page = parseInt(req.query.page) || 1;
         let limit = parseInt(req.query.limit) || 10;
         limit = limit > 50 ? 50 : limit;
@@ -94,7 +94,7 @@ userRouter.get('/feed',userAuth, async (req, res) => {
         }).select(USER_SAFE_DATA).skip(skip).limit(limit);
         
 
-        res.json({data: users});
+        res.json(users);
     } catch (error) {
         console.log(error);
         res.status(400).send("Request failed");
