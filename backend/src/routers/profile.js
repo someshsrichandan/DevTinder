@@ -25,7 +25,8 @@ profileRouter.patch('/profile/update',userAuth, async (req, res) => {
        const login_user = req.user;
        Object.keys(req.body).forEach((update)=>login_user[update] = req.body[update]);
       await login_user.save();
-      res.send("Profile updated successfully");
+      res.send(login_user);
+      console.log(login_user);
     } catch (error) {
         console.log(error)  
     }
