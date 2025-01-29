@@ -26,7 +26,7 @@ const Navbar = () => {
         
       <Link to="/" className="text-xl btn btn-ghost"><img src={Logo} alt="logo" className= "w-10 h-10 " />DevTinder</Link>
     </div>
-  {user &&  <div className="flex-none gap-1">
+  {user &&  <div className="flex-none gap-1 ">
       {/* <div className="form-control">
         <input type="text" placeholder="Search" className="w-24 input input-bordered md:w-auto" />
       </div> */}
@@ -41,13 +41,14 @@ const Navbar = () => {
         </div>
         <ul
           tabIndex={0}
-          className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+          className="menu menu-sm dropdown-content bg-base-300 rounded-box z-[1] mt-3 w-52 p-2 shadow">
           <li>
             <Link to='/profile' className="justify-between">
               Profile 
             </Link>
           </li>
-          <li><a>Settings</a></li>
+          <li><Link to={'/connections'}>Connections</Link></li>
+          <li><Link to={'/requests'}>Requests</Link></li>
           <li><a onClick={handleLogout}>Logout</a></li>
         </ul>
       </div>

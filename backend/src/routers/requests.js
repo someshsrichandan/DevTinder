@@ -41,7 +41,7 @@ requestRouter.post('/request/send/:status/:toUserId',userAuth, async (req, res) 
         });
         const data = await connectionRequest.save();
         res.send({
-            message: req.user.firstName + " is" + status + " in" + toUser.firstName,
+            message: req.user.firstName + " is"+" " + status + " in " + toUser.firstName,
             data,
         })
 
@@ -63,8 +63,8 @@ requestRouter.post('/request/review/:status/:toUserId',userAuth, async (req, res
     }
 
     const connectionRequest = await ConnectionRequest.findOne({
-        fromId: toUserId,
-        toId: loggedInUser._id,
+        fromId: loggedInUser._id,
+        toId: toUserId,
         status: 'interested'
     });
     if(!connectionRequest){
@@ -72,7 +72,7 @@ requestRouter.post('/request/review/:status/:toUserId',userAuth, async (req, res
     }
     connectionRequest.status = status;
     const data = await connectionRequest.save();
-    res.json({message: "Connection Request" + status, data});
+    res.json({message: "Connection Request " + status, data});
 
    } catch (error) {
     console.log(error);

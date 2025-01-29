@@ -5,17 +5,17 @@ const ConnectionRequestModel = require('../models/connectionRequest');
 const User = require('../models/user.js');
 const { set } = require('mongoose');
 
-const USER_SAFE_DATA = "firstName lastName age gender photoUrl skills";
+const USER_SAFE_DATA = "firstName lastName about age gender photoUrl skills";
 
 userRouter.get('/user/requests/recevied',userAuth, async (req, res) => {
     try {
         const loggedInUser = req.user;
         const connectionRequests = await ConnectionRequestModel.find({
             
-            toId: loggedInUser._id,
+            fromId: loggedInUser._id,
             status: 'interested'
 
-        }).populate('fromId',USER_SAFE_DATA);
+        }).populate('toId',USER_SAFE_DATA);
         res.json({
             message: "Connection requests",
             connectionRequests
