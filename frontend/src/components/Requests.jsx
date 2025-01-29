@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { BASE_URL } from '../utils/constant';
-import { addRequests } from '../utils/requestsSlice';
+import { addRequests, removeRequest } from '../utils/requestsSlice';
 
 function Requests() {
   const dispatch = useDispatch();
@@ -25,22 +25,14 @@ function Requests() {
     getRequests();
   }, []);
 
-  const handleResponse = async (requestId, action) => {
+  const handleResponse = async (requestId, status) => {
     try {
-      setProcessing(prev => ({ ...prev, [requestId]: action }));
-      await axios.patch(
-        `${BASE_URL}/user/requests/${action}/${requestId}`,
-        {},
-        { withCredentials: true }
-      );
-      await getRequests();
+        await axios.post(BASE_URL + "/request/review/"+status+"/"+requestId,{}, { withCredentials: true });
+        dispatch(removeRequest(requestId));
     } catch (error) {
-      console.error('Error handling request:', error);
-    } finally {
-      setProcessing(prev => ({ ...prev, [requestId]: null }));
+      console.log(error);
     }
   };
-
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -78,8 +70,9 @@ function Requests() {
               </div>
             ) : (
               requests?.map((request) => (
+            
                 <div
-                  key={request._id}
+                  key={request?.toId?._id}
                   className="card bg-base-100 shadow-md hover:shadow-lg transition-shadow duration-200"
                 >
                   <div className="card-body p-4">
@@ -134,7 +127,7 @@ function Requests() {
 
                     <div className="card-actions mt-4 gap-2">
                       <button
-                        onClick={() => handleResponse(request._id, 'ignore')}
+                        onClick={() => handleResponse(request?.toId?._id, 'rejected')}
                         className="btn btn-sm btn-outline btn-error flex-1"
                         disabled={processing[request._id]}
                       >
@@ -150,7 +143,7 @@ function Requests() {
                         )}
                       </button>
                       <button
-                        onClick={() => handleResponse(request._id, 'accept')}
+                        onClick={() => handleResponse(request?.toId?._id, 'accepted')}
                         className="btn btn-sm btn-primary flex-1"
                         disabled={processing[request._id]}
                       >
