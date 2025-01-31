@@ -3,7 +3,6 @@ const userRouter = express.Router();
 const { userAuth } = require("../middlewares/auth.js");
 const ConnectionRequestModel = require('../models/connectionRequest');
 const User = require('../models/user.js');
-const { set } = require('mongoose');
 
 const USER_SAFE_DATA = "firstName lastName about age gender photoUrl skills";
 
@@ -75,12 +74,12 @@ userRouter.get('/feed',userAuth, async (req, res) => {
         //4. user who has received request from logged in user
         const connectionRequests = await ConnectionRequestModel.find({
             $or: [
-                { fromId: loggedInUser._id, status: 'accepted' },
-                { toId: loggedInUser._id, status: 'accepted' }
+                { fromId: loggedInUser._id },
+                { toId: loggedInUser._id }
             ]
         }).select('fromId toId');
 
-        const hideUserFromFeeds = new set();
+        const hideUserFromFeeds = new Set();
         connectionRequests.forEach((row) => {
             hideUserFromFeeds.add(row.fromId.toString());
             hideUserFromFeeds.add(row.toId.toString());
